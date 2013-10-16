@@ -321,7 +321,7 @@ public class ParamsProcessorUtil {
 	}
 
 	public String convertToInternalMeetingId(String extMeetingId) {
-		return DigestUtils.shaHex(extMeetingId);
+		return DigestUtils.sha512Hex(extMeetingId);
 	}
 	
 	public String processPassword(String pass) {
@@ -425,7 +425,7 @@ public class ParamsProcessorUtil {
 		queryString = queryString.replace("checksum=" + checksum, "");
 		
 		log.debug("query string after checksum removed: [{}]", queryString);
-		String cs = DigestUtils.shaHex(apiCall + queryString + securitySalt);
+		String cs = DigestUtils.sha512Hex(apiCall + queryString + securitySalt);
 		log.debug("our checksum: [{}], client: [{}]", cs, checksum);
 		if (cs == null || cs.equals(checksum) == false) {
 			log.info("checksumError: request did not pass the checksum security check");
